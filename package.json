@@ -13,6 +13,7 @@
     "@nextui-org/card": "^2.0.33",
     "@nextui-org/react": "^2.4.6",
     "atropos": "^2.0.2",
+    "canvas-confetti": "^1.9.3",
     "framer-motion": "^11.3.21",
     "howler": "^2.2.4",
     "react": "^18.3.1",
