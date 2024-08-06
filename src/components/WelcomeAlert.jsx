@@ -8,7 +8,7 @@ const WelcomeAlert = () => {
   useEffect(() => {
     MySwal.fire({
       title: '¡Bienvenido!',
-      text: 'Bienvenido a mi Reproductor De Musica 2.0, Realizado con React, Creado Por Alejandro Palacios, Espero q te guste!',
+      text: 'Bienvenido a mi Reproductor De Musica 2.0, Realizado con React y una libreria de componentes llamado Next UI. Creado Por Alejandro Palacios, Espero q te guste!',
       icon: 'success',
       confirmButtonText: 'Aceptar'
     });
