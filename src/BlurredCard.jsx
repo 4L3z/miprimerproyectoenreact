@@ -98,6 +98,15 @@ const BlurredCard = () => {
     setShuffle(!shuffle);
   };
 
+  const handleSliderChange = (value) => {
+    const audio = audioRef.current;
+    if (audio) {
+      const newTime = (value / 100) * duration;
+      audio.currentTime = newTime;
+      setProgress(value);
+    }
+  };
+
   useEffect(() => {
     const audio = audioRef.current;
     const handleEnded = () => {
@@ -171,7 +180,7 @@ const BlurredCard = () => {
                   }}
                   color="foreground"
                   value={progress}
-                  onChange={(value) => setProgress(value)}
+                  onChange={handleSliderChange}
                   size="sm"
                 />
                 <div className="flex justify-between">
@@ -244,12 +253,11 @@ const BlurredCard = () => {
               </div>
             </div>
           </div>
-          <audio ref={audioRef} src={currentSong.src} />
         </CardBody>
+        <audio ref={audioRef} src={currentSong.src} />
       </Card>
     </Atropos>
   );
 };
 
 export default BlurredCard;
-
