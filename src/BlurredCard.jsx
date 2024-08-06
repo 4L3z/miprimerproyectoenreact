@@ -9,7 +9,8 @@ import {ShuffleIcon} from "./icons/ShuffleIcon";
 import {PlayCircleIcon} from "./icons/PlayCircleIcon"
 import Atropos from 'atropos/react';
 import 'atropos/css';
-import { Howl } from 'howler';
+import { VolumeHighIcon } from './icons/VolumeHighIcon';
+import { VolumeLowIcon } from './icons/VolumeLowIcon';
 import musicFile1 from './assets/noseve.mp3';
 import musicFile2 from './assets/Blinding Lights.mp3';
 import musicFile3 from './assets/mewing.mp3';
@@ -29,6 +30,9 @@ const BlurredCard = () => {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [repeat, setRepeat] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [volume, setVolume] = useState(40); // Estado para el volumen
 
   const currentSong = songs[currentSongIndex];
 
@@ -71,14 +75,53 @@ const BlurredCard = () => {
   };
 
   const handleNext = () => {
-    setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
+    setCurrentSongIndex((prevIndex) => {
+      const nextIndex = shuffle ? Math.floor(Math.random() * songs.length) : (prevIndex + 1) % songs.length;
+      return nextIndex;
+    });
     setIsPlaying(false);
   };
 
   const handlePrevious = () => {
-    setCurrentSongIndex((prevIndex) => (prevIndex - 1 + songs.length) % songs.length);
+    setCurrentSongIndex((prevIndex) => {
+      const prevIndexAdjusted = (prevIndex - 1 + songs.length) % songs.length;
+      return prevIndexAdjusted;
+    });
     setIsPlaying(false);
   };
+
+  const handleRepeat = () => {
+    setRepeat(!repeat);
+  };
+
+  const handleShuffle = () => {
+    setShuffle(!shuffle);
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    const handleEnded = () => {
+      if (repeat) {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        handleNext();
+      }
+    };
+    if (audio) {
+      audio.addEventListener('ended', handleEnded);
+      return () => {
+        audio.removeEventListener('ended', handleEnded);
+      };
+    }
+  }, [repeat, shuffle]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume / 100;
+    }
+  }, [volume]);
 
   return (
     <Atropos className="my-atropos">
@@ -95,15 +138,15 @@ const BlurredCard = () => {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b31b35&is=66b1c9b5&hm=1502f7927b65c8bf086eb4a3a57a8de85a52e313606d91ab6ef165097041cc12&"
+                src="https://nextui.org/images/album-cover.png"
                 width="100%"
               />
             </div>
             <div className="flex flex-col col-span-6 md:col-span-8">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-foreground/90">Playlist Linda</h3>
-                  <p className="text-small text-foreground/80">4 Canciones</p>
+                  <h3 className="font-semibold text-foreground/90">Daily Mix</h3>
+                  <p className="text-small text-foreground/80">12 Tracks</p>
                   <h1 className="text-large font-medium mt-2">{currentSong.title}</h1>
                 </div>
                 <Button
@@ -143,6 +186,15 @@ const BlurredCard = () => {
               <div className="flex w-full items-center justify-center">
                 <Button
                   isIconOnly
+                  className={`data-[hover]:bg-foreground/10 ${repeat ? 'text-foreground' : 'text-foreground/80'}`}
+                  radius="full"
+                  variant="light"
+                  onClick={handleRepeat}
+                >
+                  <RepeatOneIcon />
+                </Button>
+                <Button
+                  isIconOnly
                   className="data-[hover]:bg-foreground/10"
                   radius="full"
                   variant="light"
@@ -170,12 +222,25 @@ const BlurredCard = () => {
                 </Button>
                 <Button
                   isIconOnly
-                  className="data-[hover]:bg-foreground/10"
+                  className={`data-[hover]:bg-foreground/10 ${shuffle ? 'text-foreground' : 'text-foreground/80'}`}
                   radius="full"
                   variant="light"
+                  onClick={handleShuffle}
                 >
-                  <ShuffleIcon className="text-foreground/80" />
+                  <ShuffleIcon />
                 </Button>
+              </div>
+              <div className="flex items-center justify-between mt-3">
+                <Slider
+                  aria-label="Volume"
+                  size="lg"
+                  color="success"
+                  value={volume}
+                  onChange={(value) => setVolume(value)}
+                  className="mx-2"
+                  startContent={<VolumeLowIcon className="text-2xl" />}
+                  endContent={<VolumeHighIcon className="text-2xl" />}
+                />
               </div>
             </div>
           </div>
@@ -187,3 +252,4 @@ const BlurredCard = () => {
 };
 
 export default BlurredCard;
+
