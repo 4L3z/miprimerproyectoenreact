@@ -1,5 +1,6 @@
 import React, { useState }from 'react';
 import BlurredCard from './components/BlurredCard';
+import WelcomeAlert from './components/WelcomeAlert';
 import './index.css';
 import { Switch } from '@nextui-org/react';
 import { MoonIcon } from './icons/MoonIcon';
@@ -10,6 +11,7 @@ const App = () => {
   const [isDark, setIsDark] = useState(false);
 
   return (
+    
     <div className={`app-container ${isDark ? 'dark' : ''}`}>
       <div className="switch-container">
         <Switch
@@ -31,6 +33,7 @@ const App = () => {
       <div className="flex justify-center items-center h-screen">
       <BlurredCard isDark={isDark} setIsDark={setIsDark} />
       </div>
+      <div> <WelcomeAlert /></div>
     </div>
   );
 };
