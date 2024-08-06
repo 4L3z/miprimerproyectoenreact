@@ -1,9 +1,10 @@
 import React, { useState }from 'react';
-import BlurredCard from './BlurredCard';
+import BlurredCard from './components/BlurredCard';
 import './index.css';
 import { Switch } from '@nextui-org/react';
 import { MoonIcon } from './icons/MoonIcon';
 import { SunIcon } from './icons/SunIcon';
+
 
 const App = () => {
   const [isDark, setIsDark] = useState(false);
