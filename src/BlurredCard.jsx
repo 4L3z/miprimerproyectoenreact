@@ -138,15 +138,15 @@ const BlurredCard = () => {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src="https://nextui.org/images/album-cover.png"
+                src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b31b35&is=66b1c9b5&hm=1502f7927b65c8bf086eb4a3a57a8de85a52e313606d91ab6ef165097041cc12&"
                 width="100%"
               />
             </div>
             <div className="flex flex-col col-span-6 md:col-span-8">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-foreground/90">Daily Mix</h3>
-                  <p className="text-small text-foreground/80">12 Tracks</p>
+                  <h3 className="font-semibold text-foreground/90">Playlist Linda</h3>
+                  <p className="text-small text-foreground/80">4 Canciones</p>
                   <h1 className="text-large font-medium mt-2">{currentSong.title}</h1>
                 </div>
                 <Button
@@ -234,7 +234,7 @@ const BlurredCard = () => {
                 <Slider
                   aria-label="Volume"
                   size="lg"
-                  color="success"
+                  color="secondary"
                   value={volume}
                   onChange={(value) => setVolume(value)}
                   className="mx-2"

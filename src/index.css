@@ -3,15 +3,29 @@
 @tailwind utilities;
 
 body {
-    transition: background-color 0.3s, color 0.3s;
-  }
+  transition: background-color 0.5s ease;
+  -webkit-transition: background-color 0.5s ease;
+  -moz-transition: background-color 0.5s ease;
+  -ms-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
+}
   
   body.dark {
+    transition: background-color 0.5s ease;
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -ms-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
     background-color: #121212;
     color: #ffffff;
   }
   
   .app-container {
+    transition: background-color 0.5s ease;
+    -webkit-transition: background-color 0.5s ease;
+    -moz-transition: background-color 0.5s ease;
+    -ms-transition: background-color 0.5s ease;
+    -o-transition: background-color 0.5s ease;
     padding: 20px;
     position: relative;
   }
