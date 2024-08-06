@@ -1,54 +1,84 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardBody, Image, Button, Slider } from '@nextui-org/react';
-import {HeartIcon} from "./HeartIcon";
-import {PauseCircleIcon} from "./PauseCircleIcon";
-import {NextIcon} from "./NextIcon";
-import {PreviousIcon} from "./PreviousIcon";
-import {RepeatOneIcon} from "./RepeatOneIcon";
-import {ShuffleIcon} from "./ShuffleIcon";
-import {PlayCircleIcon} from "./PlayCircleIcon"
+import {HeartIcon} from "./icons/HeartIcon";
+import {PauseCircleIcon} from "./icons/PauseCircleIcon";
+import {NextIcon} from "./icons/NextIcon";
+import {PreviousIcon} from "./icons/PreviousIcon";
+import {RepeatOneIcon} from "./icons/RepeatOneIcon";
+import {ShuffleIcon} from "./icons/ShuffleIcon";
+import {PlayCircleIcon} from "./icons/PlayCircleIcon"
 import Atropos from 'atropos/react';
 import 'atropos/css';
 import { Howl } from 'howler';
-import musicFile from './assets/noseve.mp3'; 
+import musicFile1 from './assets/noseve.mp3';
+import musicFile2 from './assets/Blinding Lights.mp3';
+import musicFile3 from './assets/mewing.mp3';
+import musicFile4 from './assets/Un Siglo Sin Ti.mp3';
+
+const songs = [
+  { src: musicFile1, title: 'No_Se_Ve.mp3' },
+  { src: musicFile2, title: 'Blinding Lights' },
+  { src: musicFile3, title: 'Mewing' },
+  { src: musicFile4, title: 'Un Siglo Sin Ti' },
+];
 
 const BlurredCard = () => {
+  const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [liked, setLiked] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
-  const audio = useRef(
-    new Howl({
-      src: [musicFile],
-      html5: true,
-      onload: function () {
-        setDuration(this.duration());
-      },
-      onend: function () {
-        setIsPlaying(false);
-      },
-      onplay: function () {
-        setInterval(() => {
-          setProgress((this.seek() / this.duration()) * 100);
-        }, 1000);
-      },
-      onloaderror: function (id, error) {
-        console.error('Error de carga del audio:', error);
+  const currentSong = songs[currentSongIndex];
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      const handleLoadedMetadata = () => {
+        setDuration(audio.duration);
+      };
+      audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+      return () => {
+        audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }
+  }, [currentSong]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    const updateProgress = () => {
+      if (audio && duration > 0) {
+        setProgress((audio.currentTime / duration) * 100);
       }
-    })
-  );
+    };
+    if (audio) {
+      audio.addEventListener('timeupdate', updateProgress);
+      return () => {
+        audio.removeEventListener('timeupdate', updateProgress);
+      };
+    }
+  }, [duration, isPlaying]);
 
   const handlePlayPause = () => {
+    const audio = audioRef.current;
     if (isPlaying) {
-      audio.current.pause();
+      audio.pause();
     } else {
-      audio.current.play();
+      audio.play();
     }
     setIsPlaying(!isPlaying);
   };
 
-  const formatTime = (time) => new Date(time * 1000).toISOString().substr(14, 5);
+  const handleNext = () => {
+    setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
+    setIsPlaying(false);
+  };
+
+  const handlePrevious = () => {
+    setCurrentSongIndex((prevIndex) => (prevIndex - 1 + songs.length) % songs.length);
+    setIsPlaying(false);
+  };
 
   return (
     <Atropos className="my-atropos">
@@ -65,7 +95,7 @@ const BlurredCard = () => {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b27275&is=66b120f5&hm=c772038983e07666f039082ae9f4a754c587eaf8e9fe124faa140a3449de7a20&"
+                src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b31b35&is=66b1c9b5&hm=1502f7927b65c8bf086eb4a3a57a8de85a52e313606d91ab6ef165097041cc12&"
                 width="100%"
               />
             </div>
@@ -73,8 +103,8 @@ const BlurredCard = () => {
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
                   <h3 className="font-semibold text-foreground/90">Playlist Linda</h3>
-                  <p className="text-small text-foreground/80">1 Cancion</p>
-                  <h1 className="text-large font-medium mt-2">No_Se_Ve.mp3</h1>
+                  <p className="text-small text-foreground/80">4 Canciones</p>
+                  <h1 className="text-large font-medium mt-2">{currentSong.title}</h1>
                 </div>
                 <Button
                   isIconOnly
@@ -98,12 +128,16 @@ const BlurredCard = () => {
                   }}
                   color="foreground"
                   value={progress}
-                  onChange={(value) => audio.current.seek((value / 100) * duration)}
+                  onChange={(value) => setProgress(value)}
                   size="sm"
                 />
                 <div className="flex justify-between">
-                  <p className="text-small">{formatTime(audio.current.seek())}</p>
-                  <p className="text-small text-foreground/50">{formatTime(duration)}</p>
+                  <p className="text-small">
+                    {new Date((audioRef.current?.currentTime || 0) * 1000).toISOString().substr(14, 5)}
+                  </p>
+                  <p className="text-small text-foreground/50">
+                    {new Date((duration || 0) * 1000).toISOString().substr(14, 5)}
+                  </p>
                 </div>
               </div>
               <div className="flex w-full items-center justify-center">
@@ -112,14 +146,7 @@ const BlurredCard = () => {
                   className="data-[hover]:bg-foreground/10"
                   radius="full"
                   variant="light"
-                >
-                  <RepeatOneIcon className="text-foreground/80" />
-                </Button>
-                <Button
-                  isIconOnly
-                  className="data-[hover]:bg-foreground/10"
-                  radius="full"
-                  variant="light"
+                  onClick={handlePrevious}
                 >
                   <PreviousIcon />
                 </Button>
@@ -137,6 +164,7 @@ const BlurredCard = () => {
                   className="data-[hover]:bg-foreground/10"
                   radius="full"
                   variant="light"
+                  onClick={handleNext}
                 >
                   <NextIcon />
                 </Button>
@@ -151,6 +179,7 @@ const BlurredCard = () => {
               </div>
             </div>
           </div>
+          <audio ref={audioRef} src={currentSong.src} />
         </CardBody>
       </Card>
     </Atropos>

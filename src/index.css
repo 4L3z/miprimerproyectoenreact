@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  body.dark {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .app-container {
+    padding: 20px;
+    position: relative;
+  }
+  
+  .app-container.dark {
+    background-color: #121212;
+  }
+  
+  .switch-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .my-atropos {
+    margin-top: 60px; /* Adjust this if needed */
+  }
