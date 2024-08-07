@@ -41,6 +41,15 @@ body {
   }
   
   .my-atropos {
+    position: relative;
     margin-top: 60px; /* Adjust this if needed */
   }
-
+  .parallax-container {
+    perspective: 1000px;
+  }
+  
+  .parallax-image {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
+  }
+  

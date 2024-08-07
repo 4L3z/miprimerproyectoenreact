@@ -151,13 +151,14 @@ const BlurredCard = () => {
                 shadow="md"
                 src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b31b35&is=66b1c9b5&hm=1502f7927b65c8bf086eb4a3a57a8de85a52e313606d91ab6ef165097041cc12&"
                 width="100%"
+                data-atropos-offset="5"
               />
             </div>
             <div className="flex flex-col col-span-6 md:col-span-8">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-foreground/90">Playlist Linda</h3>
-                  <p className="text-small text-foreground/80">4 Canciones</p>
+                  <h3 className="font-semibold text-foreground/90" data-atropos-offset="-6">Playlist Linda</h3>
+                  <p className="text-small text-foreground/80" data-atropos-offset="3">4 Canciones</p>
                   <h1 className="text-large font-medium mt-2">{currentSong.title}</h1>
                 </div>
                 <Button
@@ -166,10 +167,12 @@ const BlurredCard = () => {
                   radius="full"
                   variant="light"
                   onPress={() => setLiked((v) => !v)}
+                  data-atropos-offset="5"
                 >
                   <HeartIcon
                     className={liked ? "[&>path]:stroke-transparent" : ""}
                     fill={liked ? "currentColor" : "none"}
+                    data-atropos-offset="5"
                   />
                 </Button>
               </div>
@@ -184,6 +187,7 @@ const BlurredCard = () => {
                   value={progress}
                   onChange={handleSliderChange}
                   size="sm"
+                  data-atropos-offset="0"
                 />
                 <div className="flex justify-between">
                   <p className="text-small">
@@ -251,6 +255,7 @@ const BlurredCard = () => {
                   className="mx-2"
                   startContent={<VolumeLowIcon className="text-2xl" />}
                   endContent={<VolumeHighIcon className="text-2xl" />}
+                  data-atropos-offset="-2"
                 />
               </div>
             </div>
