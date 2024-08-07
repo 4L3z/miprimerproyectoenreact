@@ -11,6 +11,7 @@ import Atropos from 'atropos/react';
 import 'atropos/css';
 import { VolumeHighIcon } from '../icons/VolumeHighIcon';
 import { VolumeLowIcon } from '../icons/VolumeLowIcon';
+
 import musicFile1 from '../assets/noseve.mp3';
 import musicFile2 from '../assets/Blinding Lights.mp3';
 import musicFile3 from '../assets/mewing.mp3';
@@ -133,6 +134,7 @@ const BlurredCard = () => {
   }, [volume]);
 
   return (
+    <>
     <Atropos className="my-atropos">
       <Card
         isBlurred
@@ -257,6 +259,7 @@ const BlurredCard = () => {
         <audio ref={audioRef} src={currentSong.src} />
       </Card>
     </Atropos>
+    </>
   );
 };
 
