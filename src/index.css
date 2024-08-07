@@ -44,12 +44,3 @@ body {
     margin-top: 60px; /* Adjust this if needed */
   }
 
-  /* src/index.css */
-.audio-visualizer-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Asegura que el visualizador esté detrás de la carta */
-}

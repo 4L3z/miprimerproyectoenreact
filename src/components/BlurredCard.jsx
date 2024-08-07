@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardBody, Image, Button, Slider } from '@nextui-org/react';
-import {HeartIcon} from "../icons/HeartIcon";
-import {PauseCircleIcon} from "../icons/PauseCircleIcon";
-import {NextIcon} from "../icons/NextIcon";
-import {PreviousIcon} from "../icons/PreviousIcon";
-import {RepeatOneIcon} from "../icons/RepeatOneIcon";
-import {ShuffleIcon} from "../icons/ShuffleIcon";
-import {PlayCircleIcon} from "../icons/PlayCircleIcon"
+import { HeartIcon } from "../icons/HeartIcon";
+import { PauseCircleIcon } from "../icons/PauseCircleIcon";
+import { NextIcon } from "../icons/NextIcon";
+import { PreviousIcon } from "../icons/PreviousIcon";
+import { RepeatActiveIcon } from "../icons/RepeatActiveIcon";
+import { RepeatInactiveIcon } from "../icons/RepeatInactiveIcon";
+import { ShuffleIcon } from "../icons/ShuffleIcon";
+import { PlayCircleIcon } from "../icons/PlayCircleIcon";
 import Atropos from 'atropos/react';
 import 'atropos/css';
 import { VolumeHighIcon } from '../icons/VolumeHighIcon';
 import { VolumeLowIcon } from '../icons/VolumeLowIcon';
-
 import musicFile1 from '../assets/noseve.mp3';
 import musicFile2 from '../assets/Blinding Lights.mp3';
 import musicFile3 from '../assets/mewing.mp3';
@@ -202,7 +202,7 @@ const BlurredCard = () => {
                   variant="light"
                   onClick={handleRepeat}
                 >
-                  <RepeatOneIcon />
+                  {repeat ? <RepeatActiveIcon /> : <RepeatInactiveIcon />}
                 </Button>
                 <Button
                   isIconOnly
