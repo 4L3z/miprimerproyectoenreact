@@ -16,6 +16,7 @@ import musicFile1 from '../assets/noseve.mp3';
 import musicFile2 from '../assets/Blinding Lights.mp3';
 import musicFile3 from '../assets/mewing.mp3';
 import musicFile4 from '../assets/Un Siglo Sin Ti.mp3';
+import profe from './profe.jpg'
 
 const songs = [
   { src: musicFile1, title: 'No_Se_Ve.mp3' },
@@ -149,7 +150,7 @@ const BlurredCard = () => {
                 className="object-cover"
                 height={200}
                 shadow="md"
-                src="https://cdn.discordapp.com/attachments/1248727426868051979/1268281785805176973/hjgjhjgh.webp?ex=66b31b35&is=66b1c9b5&hm=1502f7927b65c8bf086eb4a3a57a8de85a52e313606d91ab6ef165097041cc12&"
+                src={profe}
                 width="100%"
                 data-atropos-offset="5"
               />
